@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>弯道超车传媒 | 小红书投放结案报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f0f2f5;
+  --card:#ffffff;
+  --border:#e0e3e8;
+  --accent:#e94560;
+  --accent2:#0f3460;
+  --gold:#e8a000;
+  --text:#1a1a2e;
+  --muted:#5a6070;
+  --success:#10b981;
+  --radius:14px;
+  --shadow:0 2px 12px rgba(0,0,0,.06)
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Microsoft YaHei','PingFang SC',sans-serif;line-height:1.7;overflow-x:hidden;font-size:16px}
+a{color:var(--accent);text-decoration:none}
+
+/* ===== Header ===== */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 8px rgba(0,0,0,.04)}
+.logo-area{display:flex;align-items:center;gap:14px}
+.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--gold));border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;box-shadow:0 2px 8px rgba(233,69,96,.25)}
+.logo-text{font-size:18px;font-weight:700;letter-spacing:1px}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:8px}
+.nav-links a{padding:8px 18px;border-radius:8px;font-size:15px;color:var(--muted);transition:all .2s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);background:rgba(233,69,96,.08)}
+
+/* ===== Cover / Hero ===== */
+.hero{padding:80px 2rem 48px;text-align:center;background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(233,69,96,.08) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-80px;left:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(232,160,0,.06) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-size:2.6rem;font-weight:800;color:var(--text);margin-bottom:10px;position:relative}
+.hero p{color:var(--muted);font-size:16px;position:relative}
+.hero .brand-tabs{position:relative}
+.brand-tabs{display:flex;justify-content:center;gap:10px;margin:36px auto 0;flex-wrap:wrap}
+.brand-tab{padding:12px 30px;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:var(--card);color:var(--muted);transition:all .25s;box-shadow:var(--shadow)}
+.brand-tab:hover{border-color:var(--accent);color:var(--text);transform:translateY(-1px)}
+.brand-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 16px rgba(233,69,96,.25)}
+.brand-tab[data-brand="jw"].active{background:var(--accent2);border-color:var(--accent2);box-shadow:0 4px 16px rgba(15,52,96,.25)}
+.brand-tab[data-brand="xjs"].active{background:var(--gold);color:#000;border-color:var(--gold);box-shadow:0 4px 16px rgba(232,160,0,.25)}
+
+/* ===== Container ===== */
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+
+/* ===== Section ===== */
+.report-section{display:none;margin-top:36px;animation:fadeIn .4s ease}
+.report-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== TOC (目录) ===== */
+.toc-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;margin-bottom:32px;box-shadow:var(--shadow)}
+.toc-box h3{font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.toc-box h3::before{content:'';width:4px;height:20px;background:var(--accent);border-radius:2px}
+.toc-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0}
+.toc-list li{border-bottom:1px solid #f0f1f3}
+.toc-list li:nth-last-child(-n+2){border-bottom:none}
+.toc-list a{display:flex;align-items:center;gap:12px;padding:12px 8px;font-size:15px;color:var(--text);transition:all .15s;border-radius:6px}
+.toc-list a:hover{background:#f7f8fa;color:var(--accent);padding-left:14px}
+.toc-list .toc-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;font-size:13px;font-weight:700;background:#f0f1f3;color:var(--muted);flex-shrink:0}
+.toc-list li:nth-child(1) .toc-num,.toc-list li:nth-child(5) .toc-num{background:rgba(233,69,96,.1);color:var(--accent)}
+
+/* ===== Chapter Divider ===== */
+.chapter-divider{display:flex;align-items:center;gap:16px;margin:40px 0 28px;padding:0 4px}
+.chapter-divider .ch-num{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.chapter-divider .ch-line{flex:1;height:1px;background:var(--border)}
+.chapter-divider .ch-label{font-size:15px;color:var(--muted);white-space:nowrap}
+.chapter-divider.blue .ch-num{color:var(--accent2)}
+.chapter-divider.gold .ch-num{color:var(--gold)}
+
+/* ===== Month Tabs ===== */
+.month-tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+.month-tab{padding:8px 22px;border-radius:8px;font-size:15px;cursor:pointer;background:var(--card);color:var(--muted);border:2px solid var(--border);transition:all .2s;font-weight:500;box-shadow:var(--shadow)}
+.month-tab:hover{color:var(--text);border-color:var(--accent)}
+.month-tab.active{color:var(--accent);border-color:var(--accent);background:rgba(233,69,96,.06);font-weight:600}
+.month-content{display:none}
+.month-content.active{display:block;animation:fadeIn .3s ease}
+
+/* ===== Cards ===== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.card-title{font-size:17px;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:10px;font-weight:600}
+.card-title::before{content:'';width:4px;height:18px;background:var(--accent);border-radius:2px}
+
+/* ===== KPI Grid ===== */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--shadow)}
+.kpi-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.kpi-value{font-size:2rem;font-weight:800}
+.kpi-value.red{color:var(--accent)}
+.kpi-value.blue{color:#2d7de6}
+.kpi-value.gold{color:var(--gold)}
+.kpi-value.green{color:var(--success)}
+.kpi-sub{font-size:13px;color:var(--muted);margin-top:6px}
+
+/* ===== Chart Area ===== */
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+.chart-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.chart-box h3{font-size:16px;color:var(--text);margin-bottom:16px;font-weight:600}
+.chart-wrap{position:relative;height:300px}
+
+/* ===== Table ===== */
+.data-table{width:100%;border-collapse:collapse;font-size:15px}
+.data-table th{background:#f7f8fa;color:var(--muted);font-weight:600;padding:12px 14px;text-align:left;border-bottom:2px solid var(--border);position:sticky;top:0;font-size:14px}
+.data-table td{padding:12px 14px;border-bottom:1px solid #f0f1f3}
+.data-table tr:hover td{background:#fafbfc}
+.data-table .num{font-variant-numeric:tabular-nums;font-weight:600}
+.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;font-size:14px;font-weight:700}
+.rank-1{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000}
+.rank-2{background:linear-gradient(135deg,#c0c0c0,#a0a0a0);color:#000}
+.rank-3{background:linear-gradient(135deg,#cd7f32,#b8680e);color:#fff}
+.rank-n{background:#f0f1f3;color:var(--muted)}
+
+/* Store Tag */
+.store-tag{display:inline-block;padding:4px 12px;border-radius:6px;font-size:13px;background:rgba(233,69,96,.06);color:var(--accent);border:1px solid rgba(233,69,96,.15);font-weight:500}
+
+/* ===== Insights & Suggestions ===== */
+.section-heading{font-size:20px;font-weight:700;color:var(--text);margin:36px 0 18px;padding-left:14px;border-left:4px solid var(--accent)}
+.section-heading.blue{border-left-color:var(--accent2)}
+.section-heading.gold{border-left-color:var(--gold)}
+
+.insights{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.insight-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:transform .2s}
+.insight-card:hover{transform:translateY(-2px)}
+.insight-card .tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;margin-bottom:10px;color:#fff}
+.insight-card .tag.red{background:var(--accent)}
+.insight-card .tag.blue{background:var(--accent2)}
+.insight-card .tag.gold{background:var(--gold);color:#000}
+.insight-card .tag.green{background:var(--success)}
+.insight-card h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.insight-card p{font-size:14px;color:var(--muted);line-height:1.7}
+
+.suggestions{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.suggest-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-left:4px solid var(--accent);transition:transform .2s}
+.suggest-card:hover{transform:translateY(-2px)}
+.suggest-card .priority{display:inline-block;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:700;margin-bottom:8px}
+.suggest-card .priority.high{background:rgba(233,69,96,.1);color:var(--accent)}
+.suggest-card .priority.mid{background:rgba(15,52,96,.1);color:var(--accent2)}
+.suggest-card .priority.low{background:rgba(16,185,129,.1);color:var(--success)}
+.suggest-card h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.suggest-card p{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* ===== MoM (环比) Section ===== */
+.mom-section{margin-bottom:28px}
+.mom-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px}
+.mom-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 16px;text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.mom-card .mom-label{font-size:13px;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px}
+.mom-card .mom-current{font-size:1.6rem;font-weight:800;margin-bottom:4px}
+.mom-card .mom-change{font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:6px}
+.mom-change.up{color:#e94560;background:rgba(233,69,96,.08)}
+.mom-change.down{color:#10b981;background:rgba(16,185,129,.08)}
+.mom-change.up .arrow::before{content:'▲';font-size:10px}
+.mom-change.down .arrow::before{content:'▼';font-size:10px}
+.mom-card .mom-prev{font-size:12px;color:var(--muted);margin-top:4px}
+.mom-city-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.mom-city-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.mom-city-card h4{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.mom-city-card h4::before{content:'';width:4px;height:16px;background:var(--gold);border-radius:2px}
+.mom-city-table{width:100%;border-collapse:collapse;font-size:14px}
+.mom-city-table th{background:#f7f8fa;color:var(--muted);font-weight:600;padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);font-size:13px}
+.mom-city-table td{padding:8px 10px;border-bottom:1px solid #f0f1f3}
+.mom-city-table .num{font-variant-numeric:tabular-nums;font-weight:600}
+.mom-city-table .chg-up{color:#e94560;font-weight:700}
+.mom-city-table .chg-down{color:#10b981;font-weight:700}
+.mom-analysis{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.mom-analysis h4{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.mom-analysis-items{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mom-analysis-item{padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)}
+.mom-analysis-item .title{font-size:15px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.mom-analysis-item .title .icon{font-size:16px}
+.mom-analysis-item p{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* ===== BF Section ===== */
+.bf-section{margin-bottom:28px}
+.bf-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-bottom:16px}
+.bf-card h3{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.bf-card h3 .bf-badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700;color:#fff}
+.bf-meta{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:16px;font-size:14px;color:var(--muted)}
+.bf-meta span{display:flex;align-items:center;gap:4px}
+.bf-content-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bf-item{padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)}
+.bf-item h4{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.bf-item p{font-size:14px;color:var(--muted);line-height:1.7}
+.bf-item .keywords{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.bf-item .kw{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;background:rgba(233,69,96,.08);color:var(--accent);border:1px solid rgba(233,69,96,.15)}
+.bf-item .kw.blue{background:rgba(15,52,96,.08);color:var(--accent2);border-color:rgba(15,52,96,.15)}
+.bf-item .kw.gold{background:rgba(232,160,0,.08);color:var(--gold);border-color:rgba(232,160,0,.15)}
+
+/* BF PDF section - GitHub Pages compatible */
+.bf-pdf-section{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px}
+.bf-pdf-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--card);border:2px solid var(--border);border-radius:10px;font-size:15px;font-weight:600;color:var(--text);text-decoration:none;transition:all .2s;box-shadow:var(--shadow);cursor:pointer}
+.bf-pdf-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.bf-pdf-btn .pdf-icon{font-size:20px}
+.bf-pdf-btn .pdf-size{font-size:12px;font-weight:400;color:var(--text2);margin-left:4px}
+
+/* ===== Reference Report PDF ===== */
+.ref-reports{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px}
+.ref-report-link{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#f7f8fa;border:1px solid var(--border);border-radius:8px;font-size:14px;color:var(--text);text-decoration:none;transition:all .15s}
+.ref-report-link:hover{background:#fff;border-color:var(--accent);color:var(--accent)}
+.ref-report-link .pdf-icon{font-size:16px}
+.ref-report-link .pdf-size{font-size:11px;color:var(--text2);margin-left:4px}
+
+/* ===== Footer ===== */
+.site-footer{text-align:center;padding:48px 2rem;border-top:1px solid var(--border);margin-top:72px;color:var(--muted);font-size:14px}
+.site-footer .company{font-weight:700;color:var(--text);font-size:16px;margin-bottom:6px}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#aaa}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+  .chart-row,.insights,.suggestions,.bf-content-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .hero h1{font-size:1.8rem}
+  .nav-links{display:none}
+  .brand-tab{padding:10px 20px;font-size:14px}
+  .data-table{font-size:13px}
+  .data-table th,.data-table td{padding:8px 10px}
+  .toc-list{grid-template-columns:1fr}
+}
+
+/* ===== Watermark ===== */
+#watermark{
+  position:fixed;
+  top:0;left:0;
+  width:100vw;height:100vh;
+  pointer-events:none;
+  z-index:9999;
+  overflow:hidden;
+}
+#watermark canvas{
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:100%;
+}
+</style>
+</head>
+<body>
+
+<!-- Watermark -->
+<div id="watermark"><canvas id="wm-canvas"></canvas></div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="logo-area">
+    <div class="logo-icon">弯</div>
+    <div class="logo-text">弯道超车<span>传媒</span></div>
+  </div>
+  <nav class="nav-links">
+    <a class="active" onclick="scrollToEl('.hero')">首页</a>
+    <a onclick="scrollToEl('.toc-box')">目录</a>
+    <a onclick="scrollToEl('.site-footer')">关于</a>
+  </nav>
+</header>
+
+<!-- Hero / Cover -->
+<section class="hero">
+  <h1>小红书投放结案报告</h1>
+  <p>成都弯道超车传媒有限公司 | 品牌投放数据看板</p>
+  <div class="brand-tabs">
+    <div class="brand-tab active" data-brand="ls">岭上系列</div>
+    <div class="brand-tab" data-brand="jw">極屋鮨牛</div>
+    <div class="brand-tab" data-brand="xjs">新極膳</div>
+  </div>
+</section>
+
+<div class="container">
+
+<!-- ========== 岭上系列 ========== -->
+<section class="report-section active" id="sec-ls">
+  <div class="month-tabs">
+    <div class="month-tab active" data-section="ls" data-month="2">2月</div>
+    <div class="month-tab" data-section="ls" data-month="3">3月</div>
+  </div>
+
+  <!-- 2月 -->
+  <div class="month-content active" id="ls-2">
+    <!-- 目录 -->
+    <div class="toc-box" id="toc-ls-2">
+      <h3>目录</h3>
+      <ul class="toc-list">
+        <li><a href="#ls-2-ch1"><span class="toc-num">01</span>品牌数据总览</a></li>
+        <li><a href="#ls-2-ch2"><span class="toc-num">02</span>分店数据详情</a></li>
+        <li><a href="#ls-2-ch3"><span class="toc-num">03</span>TOP5博主排行</a></li>
+        <li><a href="#ls-2-ch4"><span class="toc-num">04</span>核心发现</a></li>
+        <li><a href="#ls-2-ch5"><span class="toc-num">05</span>后续投放建议</a></li>
+        <li><a href="#ls-2-ch6"><span class="toc-num">06</span>本期BF</a></li>
+      </ul>
+    </div>
+
+    <div class="chapter-divider" id="ls-2-ch1"><span class="ch-num">01</span><span class="ch-line"></span><span class="ch-label">品牌数据总览</span></div>
+    <div class="kpi-grid" id="ls-2-kpi"></div>
+
+    <div class="chapter-divider" id="ls-2-ch2"><span class="ch-num">02</span><span class="ch-line"></span><span class="ch-label">分店数据详情</span></div>
+    <div class="chart-row">
+      <div class="chart-box"><h3>分店曝光量对比</h3><div class="chart-wrap"><canvas id="ls-2-chart1"></canvas></div></div>
+      <div class="chart-box"><h3>分店互动量对比</h3><div class="chart-wrap"><canvas id="ls-2-chart2"></canvas></div></div>
+    </div>
+
+    <div class="chapter-divider" id="ls-2-ch3"><span class="ch-num">03</span><span class="ch-line"></span><span class="ch-label">TOP5博主排行</span></div>
+    <div class="card"><div class="card-title">TOP5曝光博主</div><div id="ls-2-top5bg"></div></div>
+    <div class="card"><div class="card-title">TOP5互动博主</div><div id="ls-2-top5hd"></div></div>
+
+    <div class="chapter-divider" id="ls-2-ch4"><span class="ch-num">04</span><span class="ch-line"></span><span class="ch-label">核心发现</span></div>
+    <div class="insights">
+      <div class="insight-card"><span class="tag red">01</span><h4>精品策略成效显著</h4><p>仅22篇笔记即获613,900次曝光，占三品牌总曝光12.8%，单篇平均曝光27,905次，远超行业平均水平</p></div>
+      <div class="insight-card"><span class="tag red">02</span><h4>两店定位差异鲜明</h4><p>岭上·Omakase（桃源国际店）主打高端黑金风格，岭上樽·Omakase（新天地店）以IP联名制造话题，有效覆盖不同受众</p></div>
+      <div class="insight-card"><span class="tag red">03</span><h4>鲸鱼欧尼互动全品牌领先</h4><p>单篇互动1,120次（赞850+藏260），Omakitty联名IP+Hello Kitty视觉资产为岭上樽店创造全系列最高收藏量</p></div>
+      <div class="insight-card"><span class="tag red">04</span><h4>情人节+春节双节点精准卡位</h4><p>"Crush约会""直男抄作业"等话题精准触达目标客群，双节流量高峰充分利用</p></div>
+    </div>
+
+    <div class="chapter-divider" id="ls-2-ch5"><span class="ch-num">05</span><span class="ch-line"></span><span class="ch-label">后续投放建议</span></div>
+    <div class="suggestions">
+      <div class="suggest-card"><span class="priority high">高优先</span><h4>扩大投放规模</h4><p>22篇即获61.4万曝光，单篇效率极高。建议增加至30-40篇，覆盖更多城市圈层博主</p></div>
+      <div class="suggest-card"><span class="priority high">高优先</span><h4>深化两店差异化定位</h4><p>岭上·Omakase强化"高端仪式感"，岭上樽·Omakase深化IP联名路线，避免内容同质化</p></div>
+      <div class="suggest-card"><span class="priority high">高优先</span><h4>复投高互动博主</h4><p>鲸鱼欧尼单篇互动1,120次为全品牌最高，优先建立长期合作，复制高互动内容结构</p></div>
+      <div class="suggest-card"><span class="priority mid">中优先</span><h4>增加攻略型内容</h4><p>强化"约会餐厅""拍照指南""点单推荐"等内容方向，提升收藏率和搜索收录权重</p></div>
+    </div>
+
+    <div class="chapter-divider" id="ls-2-ch6"><span class="ch-num">06</span><span class="ch-line"></span><span class="ch-label">本期BF</span></div>
+    <div class="bf-section" id="ls-2-bf"></div>
+    <div class="ref-reports">
+      <a class="ref-report-link" href="report_feb_ls.pdf" target="_blank" rel="noopener"><span class="pdf-icon">&#128196;</span>2月岭上系列结案报告<span class="pdf-size">(0.4MB)</span></a>
+    </div>
+  </div>
+
+  <!-- 3月 -->
+  <div class="month-content" id="ls-3">
+    <div class="toc-box" id="toc-ls-3">
+      <h3>目录</h3>
+      <ul class="toc-list">
+        <li><a href="#ls-3-ch1"><span class="toc-num">01</span>品牌数据总览</a></li>
+        <li><a href="#ls-3-ch2"><span class="toc-num">02</span>分店数据详情</a></li>
+        <li><a href="#ls-3-ch3"><span class="toc-num">03</span>TOP5博主排行</a></li>
+        <li><a href="#ls-3-ch4"><span class="toc-num">04</span>核心发现</a></li>
+        <li><a href="#ls-3-ch5"><span class="toc-num">05</span>后续投放建议</a></li>
+        <li><a href="#ls-3-ch6"><span class="toc-num">06</span>本期BF</a></li>
+      </ul>
+    </div>
+
+    <div class="chapter-divider" id="ls-3-ch1"><span class="ch-num">01</span><span class="ch-line"></span><span class="ch-label">品牌数据总览</span></div>
+    <div class="kpi-grid" id="ls-3-kpi"></div>
+
+    <div class="chapter-divider" id="ls-3-ch2"><span class="ch-num">02</span><span class="ch-line"></span><span class="ch-label">分店数据详情</span></div>
+    <div class="chart-row">
+      <div class="chart-box"><h3>分店曝光量对比</h3><div class="chart-wrap"><canvas id="ls-3-chart1"></canvas></div></div>
+      <div class="chart-box"><h3>分店互动量对比</h3><div class="chart-wrap"><canvas id="ls-3-chart2"></canvas></div></div>
+    </div>
+
+    <div class="chapter-divider" id="ls-3-ch3"><span class="ch-num">03</span><span class="ch-line"></span><span class="ch-label">TOP5博主排行</span></div>
+    <div class="card"><div class="card-title">TOP5曝光博主</div><div id="ls-3-top5bg"></div></div>
+    <div class="card"><div class="card-title">TOP5互动博主</div><div id="ls-3-top5hd"></div></div>
+
+    <div class="chapter-divider" id="ls-3-ch4"><span class="ch-num">04</span><span class="ch-line"></span><span class="ch-label">核心发现</span></div>
+    <div class="insights">
+      <div class="insight-card"><span class="tag red">01</span><h4>3月投放稳步推进</h4><p>岭上系列3月继续武汉双店投放，依托3月岭上系媒体推广合同，投放规模与内容方向持续优化</p></div>
+      <div class="insight-card"><span class="tag red">02</span><h4>内容方向持续迭代</h4><p>延续2月精品策略，在高端Omakase体验基础上探索更多场景化内容表达</p></div>
+    </div>
+
+    <div class="chapter-divider" id="ls-3-ch5"><span class="ch-num">05</span><span class="ch-line"></span><span class="ch-label">后续投放建议</span></div>
+    <div class="suggestions">
+      <div class="suggest-card"><span class="priority high">高优先</span><h4>持续扩大投放规模</h4><p>2月验证精品策略有效，3月建议维持30+篇投放量级，巩固品牌声量</p></div>
+      <div class="suggest-card"><span class="priority mid">中优先</span><h4>探索春季约会场景</h4><p>结合春季/樱花季等时令元素，打造"春日约会Omakase"主题内容</p></div>
+    </div>
+
+    <div class="chapter-divider" id="ls-3-ch6"><span class="ch-num">06</span><span class="ch-line"></span><span class="ch-label">本期BF</span></div>
+    <div class="bf-section" id="ls-3-bf"></div>
+  </div>
+</section>
+
+<!-- ========== 極屋鮨牛 ========== -->
+<section class="report-section" id="sec-jw">
+  <div class="month-tabs">
+    <div class="month-tab active" data-section="jw" data-month="2">2月</div>
+    <div class="month-tab" data-section="jw" data-month="5">5月</div>
+  </div>
+
+  <!-- 2月 -->
+  <div class="month-content active" id="jw-2">
+    <div class="toc-box" id="toc-jw-2">
+      <h3>目录</h3>
+      <ul class="toc-list">
+        <li><a href="#jw-2-ch1"><span class="toc-num">01</span>品牌数据总览</a></li>
+        <li><a href="#jw-2-ch2"><span class="toc-num">02</span>分城数据详情</a></li>
+        <li><a href="#jw-2-ch3"><span class="toc-num">03</span>TOP5博主排行</a></li>
+        <li><a href="#jw-2-ch4"><span class="toc-num">04</span>核心发现</a></li>
+        <li><a href="#jw-2-ch5"><span class="toc-num">05</span>后续投放建议</a></li>
+        <li><a href="#jw-2-ch6"><span class="toc-num">06</span>本期BF</a></li>
+      </ul>
+    </div>
+
+    <div class="chapter-divider blue" id="jw-2-ch1"><span class="ch-num">01</span><span class="ch-line"></span><span class="ch-label">品牌数据总览</span></div>
+    <div class="kpi-grid" id="jw-2-kpi"></div>
+
+    <div class="chapter-divider blue" id="jw-2-ch2"><span class="ch-num">02</span><span class="ch-line"></span><span class="ch-label">分城数据详情</span></div>
+    <div class="chart-row">
+      <div class="chart-box"><h3>分城曝光量对比</h3><div class="chart-wrap"><canvas id="jw-2-chart1"></canvas></div></div>
+      <div class="chart-box"><h3>分城互动量对比</h3><div class="chart-wrap"><canvas id="jw-2-chart2"></canvas></div></div>
+    </div>
+
+    <div class="chapter-divider blue" id="jw-2-ch3"><span class="ch-num">03</span><span class="ch-line"></span><span class="ch-label">TOP5博主排行</span></div>
+    <div class="card"><div class="card-title">TOP5曝光博主</div><div id="jw-2-top5bg"></div></div>
+    <div class="card"><div class="card-title">TOP5互动博主</div><div id="jw-2-top5hd"></div></div>
+
+    <div class="chapter-divider blue" id="jw-2-ch4"><span class="ch-num">04</span><span class="ch-line"></span><span class="ch-label">核心发现</span></div>
+    <div class="insights">
+      <div class="insight-card"><span class="tag blue">01</span><h4>四城联动覆盖最广</h4><p>成都/昆明/武汉/重庆四城共59篇笔记，总曝光1,372,616次，占三品牌总曝光28.7%</p></div>
+      <div class="insight-card"><span class="tag blue">02</span><h4>重庆站为最强增长引擎</h4><p>重庆站25篇笔记贡献60万+曝光、5,606次互动，四城中数据表现最优</p></div>
+      <div class="insight-card"><span class="tag blue">03</span><h4>复购背书策略有效</h4><p>"四刷""吃回头客""慕名而来"等真实体验分享贯穿各城投放，有效建立品牌信任度</p></div>
+      <div class="insight-card"><span class="tag blue">04</span><h4>单篇效率有提升空间</h4><p>单篇平均曝光23,265次、互动187次，建议减少数量提升单篇质量</p></div>
+    </div>
+
+    <div class="chapter-divider blue" id="jw-2-ch5"><span class="ch-num">05</span><span class="ch-line"></span><span class="ch-label">后续投放建议</span></div>
+    <div class="suggestions">
+      <div class="suggest-card" style="border-left-color:var(--accent2)"><span class="priority high">高优先</span><h4>提升单篇内容质量</h4><p>目前59篇单篇平均曝光2.3万，建议精选博主+提升内容深度，减少数量提升单篇效率</p></div>
+      <div class="suggest-card" style="border-left-color:var(--accent2)"><span class="priority high">高优先</span><h4>加大重庆站投放力度</h4><p>重庆站数据表现最优（25篇60万+曝光），建议持续加码并复制成功模式到其他城市</p></div>
+      <div class="suggest-card" style="border-left-color:var(--accent2)"><span class="priority mid">中优先</span><h4>强化"复购背书"内容方向</h4><p>"四刷""回头客"等真实体验分享效果验证有效，引导更多博主以真实体验为核心创作</p></div>
+      <div class="suggest-card" style="border-left-color:var(--accent2)"><span class="priority mid">中优先</span><h4>探索KOL探店合作模式</h4><p>搭配更高量级KOL探店内容，提升品牌调性和内容深度，建立差异化竞争优势</p></div>
+    </div>
+
+    <div class="chapter-divider blue" id="jw-2-ch6"><span class="ch-num">06</span><span class="ch-line"></span><span class="ch-label">本期BF</span></div>
+    <div class="bf-section" id="jw-2-bf"></div>
+    <div class="ref-reports">
+      <a class="ref-report-link" href="report_feb_jw.pdf" target="_blank" rel="noopener"><span class="pdf-icon">&#128196;</span>2月極屋鮨牛结案报告<span class="pdf-size">(0.5MB)</span></a>
+    </div>
+  </div>
+
+  <!-- 5月 -->
+  <div class="month-content" id="jw-5">
+    <div class="toc-box" id="toc-jw-5">
+      <h3>目录</h3>
+      <ul class="toc-list">
+        <li><a href="#jw-5-ch1"><span class="toc-num">01</span>5月BF方案</a></li>
+        <li><a href="#jw-5-ch2"><span class="toc-num">02</span>BF原始文件</a></li>
+      </ul>
+    </div>
+
+    <div class="chapter-divider blue" id="jw-5-ch1"><span class="ch-num">01</span><span class="ch-line"></span><span class="ch-label">5月BF方案</span></div>
+    <div class="bf-section" id="jw-5-bf"></div>
+
+    <div class="chapter-divider blue" id="jw-5-ch2"><span class="ch-num">02</span><span class="ch-line"></span><span class="ch-label">BF原始文件</span></div>
+    <div class="bf-pdf-section">
+      <a class="bf-pdf-btn" href="bf_jw_may.pdf" target="_blank" rel="noopener"><span class="pdf-icon">&#128196;</span>極屋鮨牛_五一生日BF方案<span class="pdf-size">(0.4MB)</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 新極膳 ========== -->
+<section class="report-section" id="sec-xjs">
+  <div class="month-tabs">
+    <div class="month-tab" data-section="xjs" data-month="2">2月</div>
+    <div class="month-tab active" data-section="xjs" data-month="3">3月</div>
+  </div>
+
+  <!-- 2月 -->
+  <div class="month-content" id="xjs-2">
+    <div class="toc-box" id="toc-xjs-2">
+      <h3>目录</h3>
+      <ul class="toc-list">
+        <li><a href="#xjs-2-ch1"><span class="toc-num">01</span>品牌数据总览</a></li>
+        <li><a href="#xjs-2-ch2"><span class="toc-num">02</span>分城数据详情</a></li>
+        <li><a href="#xjs-2-ch3"><span class="toc-num">03</span>TOP5博主排行</a></li>
+        <li><a href="#xjs-2-ch4"><span class="toc-num">04</span>核心发现</a></li>
+        <li><a href="#xjs-2-ch5"><span class="toc-num">05</span>后续投放建议</a></li>
+        <li><a href="#xjs-2-ch6"><span class="toc-num">06</span>本期BF</a></li>
+      </ul>
+    </div>
+
+    <div class="chapter-divider gold" id="xjs-2-ch1"><span class="ch-num">01</span><span class="ch-line"></span><span class="ch-label">品牌数据总览</span></div>
+    <div class="kpi-grid" id="xjs-2-kpi"></div>
+
+    <div class="chapter-divider gold" id="xjs-2-ch2"><span class="ch-num">02</span><span class="ch-line"></span><span class="ch-label">分城数据详情</span></div>
+    <div class="chart-row">
+      <div class="chart-box"><h3>分城曝光量对比</h3><div class="chart-wrap"><canvas id="xjs-2-chart1"></canvas></div></div>
+      <div class="chart-box"><h3>分城互动量对比</h3><div class="chart-wrap"><canvas id="xjs-2-chart2"></canvas></div></div>
+    </div>
+
+    <div class="chapter-divider gold" id="xjs-2-ch3"><span class="ch-num">03</span><span class="ch-line"></span><span class="ch-label">TOP5博主排行</span></div>
+    <div class="card"><div class="card-title">TOP5曝光博主</div><div id="xjs-2-top5bg"></div></div>
+    <div class="card"><div class="card-title">TOP5互动博主</div><div id="xjs-2-top5hd"></div></div>
+
+    <div class="chapter-divider gold" id="xjs-2-ch4"><span class="ch-num">04</span><span class="ch-line"></span><span class="ch-label">核心发现</span></div>
+    <div class="insights">
+      <div class="insight-card"><span class="tag gold">01</span><h4>爆款制造能力全品牌最强</h4><p>好吃的小布丁单篇曝光54.6万、榴莲拌饭46.3万，两篇即超百万曝光，占三品牌总曝光58.4%</p></div>
+      <div class="insight-card"><span class="tag gold">02</span><h4>"含金量"IP效应显著</h4><p>好吃的小布丁（互动1,166次）、榴莲拌饭（互动560次）均围绕"含金量"话题，形成品牌独特记忆点</p></div>
+      <div class="insight-card"><span class="tag gold">03</span><h4>情人节节点投放精准</h4><p>以情人节为核心投放节点，"自助约会餐"场景定位精准，food流油互动634次引爆情感共鸣</p></div>
+      <div class="insight-card"><span class="tag gold">04</span><h4>单篇效率全品牌最高</h4><p>48篇笔记获279.3万次总曝光，单篇平均曝光58,189次、互动287次，均为三品牌最优</p></div>
+    </div>
+
+    <div class="chapter-divider gold" id="xjs-2-ch5"><span class="ch-num">05</span><span class="ch-line"></span><span class="ch-label">后续投放建议</span></div>
+    <div class="suggestions">
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority high">高优先</span><h4>复投爆款博主维持声量</h4><p>好吃的小布丁、榴莲拌饭等高曝光博主优先复投，同时分析其内容结构复制到更多博主</p></div>
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority high">高优先</span><h4>深化"含金量"品牌IP</h4><p>"含金量"系列话题已验证有效，建议打造系列化内容矩阵，成为品牌独特标签</p></div>
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority mid">中优先</span><h4>增加投放城市覆盖</h4><p>目前仅武汉/重庆两城，建议拓展成都/昆明等城市，扩大品牌声量</p></div>
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority mid">中优先</span><h4>强化约会场景内容</h4><p>"自助约会餐"场景精准卡位，持续产出约会/聚餐/庆祝等场景内容，提升目标客群转化</p></div>
+    </div>
+
+    <div class="chapter-divider gold" id="xjs-2-ch6"><span class="ch-num">06</span><span class="ch-line"></span><span class="ch-label">本期BF</span></div>
+    <div class="bf-section" id="xjs-2-bf"></div>
+    <div class="ref-reports">
+      <a class="ref-report-link" href="report_feb_xjs.pdf" target="_blank" rel="noopener"><span class="pdf-icon">&#128196;</span>2月新極膳结案报告<span class="pdf-size">(0.5MB)</span></a>
+      <a class="ref-report-link" href="report_feb_all.pdf" target="_blank" rel="noopener"><span class="pdf-icon">&#128196;</span>2月三品牌综合结案报告<span class="pdf-size">(0.7MB)</span></a>
+    </div>
+  </div>
+
+  <!-- 3月 -->
+  <div class="month-content active" id="xjs-3">
+    <div class="toc-box" id="toc-xjs-3">
+      <h3>目录</h3>
+      <ul class="toc-list">
+        <li><a href="#xjs-3-ch0"><span class="toc-num">00</span>笔记类型拆分</a></li>
+        <li><a href="#xjs-3-ch-mom"><span class="toc-num">MO</span>3月vs2月环比数据</a></li>
+        <li><a href="#xjs-3-ch1"><span class="toc-num">01</span>品牌数据总览</a></li>
+        <li><a href="#xjs-3-ch2"><span class="toc-num">02</span>分城数据详情</a></li>
+        <li><a href="#xjs-3-ch3"><span class="toc-num">03</span>TOP5博主排行</a></li>
+        <li><a href="#xjs-3-ch4"><span class="toc-num">04</span>核心发现</a></li>
+        <li><a href="#xjs-3-ch5"><span class="toc-num">05</span>后续投放建议</a></li>
+        <li><a href="#xjs-3-ch6"><span class="toc-num">06</span>本期BF</a></li>
+      </ul>
+    </div>
+
+    <!-- 笔记类型拆分说明 -->
+    <div class="chapter-divider gold" id="xjs-3-ch0"><span class="ch-num">00</span><span class="ch-line"></span><span class="ch-label">笔记类型拆分</span></div>
+    <div class="card" style="border-left:4px solid var(--gold);margin-bottom:24px">
+      <div class="card-title" style="color:var(--gold)">笔记类型拆分</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;font-size:15px">
+        <div style="text-align:center;padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:2rem;font-weight:800;color:var(--gold)">69</div>
+          <div style="color:var(--text);font-weight:600;margin-top:4px">总笔记数</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:2rem;font-weight:800;color:var(--accent2)">39</div>
+          <div style="color:var(--text);font-weight:600;margin-top:4px">实际探店</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">博主到店真实体验拍摄</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:2rem;font-weight:800;color:var(--muted)">30</div>
+          <div style="color:var(--text);font-weight:600;margin-top:4px">看图写文</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">基于品牌素材二次创作</div>
+        </div>
+      </div>
+      <p style="font-size:14px;color:var(--muted);margin-top:14px;line-height:1.7">3月69篇笔记中，30篇为看图写文（基于品牌提供素材进行图文创作），39篇为实际探店（博主到店真实体验拍摄）。看图写文占比43.5%，虽然曝光效率低于实际探店，但有效扩大了品牌声量覆盖面和关键词占位。</p>
+    </div>
+
+    <!-- 环比数据模块 -->
+    <div class="chapter-divider gold" id="xjs-3-ch-mom"><span class="ch-num">MO</span><span class="ch-line"></span><span class="ch-label">3月 vs 2月 环比数据</span></div>
+    <div class="mom-section">
+      <div class="mom-overview" id="xjs-3-mom"></div>
+
+      <!-- 武汉站独立环比 -->
+      <div class="mom-city-card" style="margin-bottom:24px">
+        <h4 style="font-size:18px;margin-bottom:16px">武汉站环比分析</h4>
+        <table class="mom-city-table">
+          <thead><tr><th>指标</th><th>2月</th><th>3月</th><th>环比</th></tr></thead>
+          <tbody>
+            <tr><td>笔记数</td><td class="num">28</td><td class="num">40</td><td class="chg-up">+42.9%</td></tr>
+            <tr><td>其中实际探店</td><td class="num">28</td><td class="num">25</td><td class="chg-down">-10.7%</td></tr>
+            <tr><td>其中看图写文</td><td class="num">0</td><td class="num">15</td><td class="chg-up">新增</td></tr>
+            <tr><td>曝光量</td><td class="num">130.9万</td><td class="num">75.6万</td><td class="chg-down">-42.2%</td></tr>
+            <tr><td>互动量</td><td class="num">6,649</td><td class="num">7,684</td><td class="chg-up">+15.6%</td></tr>
+            <tr><td>点赞</td><td class="num">4,581</td><td class="num">5,663</td><td class="chg-up">+23.6%</td></tr>
+            <tr><td>收藏</td><td class="num">1,463</td><td class="num">1,473</td><td class="chg-up">+0.7%</td></tr>
+            <tr><td>评论</td><td class="num">605</td><td class="num">548</td><td class="chg-down">-9.4%</td></tr>
+            <tr><td>单篇均曝光</td><td class="num">4.7万</td><td class="num">1.9万</td><td class="chg-down">-59.6%</td></tr>
+            <tr><td>单篇均互动</td><td class="num">237</td><td class="num">192</td><td class="chg-down">-19.0%</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:16px;padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)">武汉站环比原因分析</div>
+          <div style="font-size:14px;color:var(--muted);line-height:1.8">
+            <p style="margin-bottom:8px"><strong style="color:var(--accent)">曝光量下降42.2%：</strong>2月武汉站"榴莲拌饭"单篇46.3万曝光，3月最高仅安的漫长时光10.2万，缺少同级别的头部内容。同时15篇看图写文曝光效率明显低于实际探店，拉低了整体均值。</p>
+            <p style="margin-bottom:8px"><strong style="color:#e94560">互动量逆势增长15.6%：</strong>笔记数增长42.9%的同时互动量仍保持增长，说明实际探店内容质量在提升。安的漫长时光（互动500）、邪恶黄面包（469）、佩奇不是猪（457）等多篇高质量探店内容支撑，互动表现更稳。</p>
+            <p><strong style="color:var(--accent2)">实际探店数略减：</strong>2月28篇全部为实际探店，3月25篇实际探店（+15篇看图写文），实际到店内容量减少10.7%，对真实体验类内容的产出有一定影响。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 重庆站独立环比 -->
+      <div class="mom-city-card" style="margin-bottom:24px">
+        <h4 style="font-size:18px;margin-bottom:16px">重庆站环比分析</h4>
+        <table class="mom-city-table">
+          <thead><tr><th>指标</th><th>2月</th><th>3月</th><th>环比</th></tr></thead>
+          <tbody>
+            <tr><td>笔记数</td><td class="num">20</td><td class="num">29</td><td class="chg-up">+45.0%</td></tr>
+            <tr><td>其中实际探店</td><td class="num">20</td><td class="num">14</td><td class="chg-down">-30.0%</td></tr>
+            <tr><td>其中看图写文</td><td class="num">0</td><td class="num">15</td><td class="chg-up">新增</td></tr>
+            <tr><td>曝光量</td><td class="num">148.4万</td><td class="num">52.5万</td><td class="chg-down">-64.6%</td></tr>
+            <tr><td>互动量</td><td class="num">7,111</td><td class="num">4,502</td><td class="chg-down">-36.7%</td></tr>
+            <tr><td>点赞</td><td class="num">5,758</td><td class="num">3,449</td><td class="chg-down">-40.1%</td></tr>
+            <tr><td>收藏</td><td class="num">1,037</td><td class="num">813</td><td class="chg-down">-21.6%</td></tr>
+            <tr><td>评论</td><td class="num">316</td><td class="num">240</td><td class="chg-down">-24.1%</td></tr>
+            <tr><td>单篇均曝光</td><td class="num">7.4万</td><td class="num">1.8万</td><td class="chg-down">-75.7%</td></tr>
+            <tr><td>单篇均互动</td><td class="num">356</td><td class="num">155</td><td class="chg-down">-56.5%</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:16px;padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)">重庆站环比原因分析</div>
+          <div style="font-size:14px;color:var(--muted);line-height:1.8">
+            <p style="margin-bottom:8px"><strong style="color:var(--accent)">曝光量下降64.6%：</strong>2月重庆站"好吃的小布丁"单篇54.6万曝光+"小熊吹奶瓶"15.6万曝光，两篇就贡献了70万+曝光。3月最高为小兔瑞宝8.5万，2月那几篇大爆款没有出现同等级的内容，是曝光回落的主要原因。</p>
+            <p style="margin-bottom:8px"><strong style="color:var(--accent)">互动量下降36.7%：</strong>2月小熊吹奶瓶互动1,166次为全品牌最高，3月重庆站最高互动仅奶茶脑袋517次，头部内容断档导致互动总量下降。同时15篇看图写文互动效率远低于实际探店，进一步拉低均值。</p>
+            <p style="margin-bottom:8px"><strong style="color:var(--accent2)">新博主正在成长：</strong>奶茶脑袋（互动517）、笑笑日记（297）、灿灿好困（283）等新博主表现不错，后续可以继续关注。</p>
+            <p><strong style="color:var(--accent2)">实际探店减少：</strong>2月20篇全部为实际探店，3月仅14篇实际探店（+15篇看图写文），到店体验内容减少30%，对真实种草效果有一定影响。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 总体环比原因分析 -->
+      <div class="mom-analysis">
+        <h4>总体环比变化原因分析</h4>
+        <div class="mom-analysis-items">
+          <div class="mom-analysis-item">
+            <div class="title"><span class="icon">1</span>2月爆款不再，3月缺少同级别头部内容</div>
+            <p>2月"好吃的小布丁"54.6万+"榴莲拌饭"46.3万+"小熊吹奶瓶"15.6万，三篇就贡献了116万+曝光。3月最高仅安的漫长时光10.2万，没有出现同级别的爆款。总量回落是正常的，但也说明需要继续培养新的爆款内容。</p>
+          </div>
+          <div class="mom-analysis-item">
+            <div class="title"><span class="icon">2</span>看图写文占比43.5%，拉低了整体数据</div>
+            <p>3月69篇中30篇为看图写文，武汉15篇+重庆15篇。看图写文曝光和互动效率都比实际探店低，拉低了单篇均曝光至1.9万（2月5.8万）。但看图写文扩大了关键词占位和品牌声量覆盖，这个取舍是明确的。</p>
+          </div>
+          <div class="mom-analysis-item">
+            <div class="title"><span class="icon">3</span>中途临时换博主，执行上增加了难度</div>
+            <p>3月投放过程中出现临时换博主的情况，部分原定博主因档期或其他原因无法执行，需要临时替换。换人导致内容风格不统一、磨合期延长，部分替换博主数据表现未达预期，增加了投放执行的不确定性。</p>
+          </div>
+          <div class="mom-analysis-item">
+            <div class="title"><span class="icon">4</span>武汉互动逆势增长，探店内容质量提升</div>
+            <p>武汉站笔记数+42.9%的同时互动量+15.6%，25篇实际探店内容互动效率更高。安的漫长时光（互动500）、邪恶黄面包（469）、佩奇不是猪（457）等多篇高质量探店内容支撑，互动表现更稳，为后续投放提供了优质博主储备。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-divider gold" id="xjs-3-ch1"><span class="ch-num">01</span><span class="ch-line"></span><span class="ch-label">品牌数据总览</span></div>
+    <div class="kpi-grid" id="xjs-3-kpi"></div>
+
+    <div class="chapter-divider gold" id="xjs-3-ch2"><span class="ch-num">02</span><span class="ch-line"></span><span class="ch-label">分城数据详情</span></div>
+    <div class="chart-row">
+      <div class="chart-box"><h3>分城曝光量对比</h3><div class="chart-wrap"><canvas id="xjs-3-chart1"></canvas></div></div>
+      <div class="chart-box"><h3>分城互动量对比</h3><div class="chart-wrap"><canvas id="xjs-3-chart2"></canvas></div></div>
+    </div>
+
+    <div class="chapter-divider gold" id="xjs-3-ch3"><span class="ch-num">03</span><span class="ch-line"></span><span class="ch-label">TOP5博主排行</span></div>
+    <div class="card"><div class="card-title">TOP5曝光博主</div><div id="xjs-3-top5bg"></div></div>
+    <div class="card"><div class="card-title">TOP5互动博主</div><div id="xjs-3-top5hd"></div></div>
+    <div class="card"><div class="card-title">全部博主明细</div><div id="xjs-3-all"></div></div>
+
+    <div class="chapter-divider gold" id="xjs-3-ch4"><span class="ch-num">04</span><span class="ch-line"></span><span class="ch-label">核心发现</span></div>
+    <div class="insights">
+      <div class="insight-card"><span class="tag gold">01</span><h4>武汉站实际探店质量突出</h4><p>武汉25篇实际探店贡献7,684次互动，安的漫长时光10.2万曝光领跑，邪恶黄面包互动469次、佩奇不是猪457次，实际到店内容互动效率远高于看图写文</p></div>
+      <div class="insight-card"><span class="tag gold">02</span><h4>看图写文扩大覆盖面，但效率有限</h4><p>30篇看图写文有效扩大了品牌关键词占位和声量覆盖，但曝光和互动效率显著低于实际探店。武汉15篇看图写文+重庆15篇看图写文，占比43.5%</p></div>
+      <div class="insight-card"><span class="tag gold">03</span><h4>中途临时换博主增加了执行难度</h4><p>3月投放过程中出现临时换博主的情况，原定博主因档期等原因无法执行需要临时替换，导致内容风格不统一、磨合期延长，部分替换博主数据未达预期</p></div>
+      <div class="insight-card"><span class="tag gold">04</span><h4>重庆站处于调整期</h4><p>2月"小布丁+小熊吹奶瓶"两篇大爆款带动了整体数据，3月转向更多博主分散投放，奶茶脑袋（互动517）、笑笑日记（297）等新博主在成长，但整体效率还需要提升</p></div>
+    </div>
+
+    <div class="chapter-divider gold" id="xjs-3-ch5"><span class="ch-num">05</span><span class="ch-line"></span><span class="ch-label">后续投放建议</span></div>
+    <div class="suggestions">
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority high">高优先</span><h4>提高实际探店占比</h4><p>3月看图写文占43.5%拉低整体效率，建议下月实际探店占比提升至70%以上，看图写文仅作为补充手段</p></div>
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority high">高优先</span><h4>提前锁定博主档期，避免临时换人</h4><p>3月临时换博主导致内容质量波动，建议下月提前2周确认博主档期并签署协议，预留1-2名备选博主</p></div>
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority high">高优先</span><h4>复投武汉站高互动博主</h4><p>安的漫长时光、佩奇不是猪、邪恶黄面包等3月高互动博主优先复投，巩固武汉市场声量</p></div>
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority mid">中优先</span><h4>重庆站精选博主提升单篇效率</h4><p>3月重庆站单篇均互动155次，建议减少数量精选博主，集中资源打造2-3篇高质量内容</p></div>
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority mid">中优先</span><h4>看图写文聚焦关键词占位</h4><p>看图写文虽然互动效率低，但能有效占位"海鲜自助""约会餐厅"等搜索关键词，建议定向优化标题和标签策略</p></div>
+      <div class="suggest-card" style="border-left-color:var(--gold)"><span class="priority mid">中优先</span><h4>节点营销常态化</h4><p>结合五一/母亲节等节点提前规划投放节奏，延续情人节"含金量"爆款模式</p></div>
+    </div>
+
+    <div class="chapter-divider gold" id="xjs-3-ch6"><span class="ch-num">06</span><span class="ch-line"></span><span class="ch-label">本期BF</span></div>
+    <div class="bf-section" id="xjs-3-bf"></div>
+  </div>
+</section>
+
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="company">成都弯道超车传媒有限公司</div>
+  <div>Chengdu Curve-Overtaking Culture & Media Co., Ltd.</div>
+  <div style="margin-top:8px">数据更新时间：2026年4月</div>
+</footer>
+
+<script>
+// ===== DATA =====
+const DATA = {
+  ls: {
+    '2': {
+      total: {notes:22,baoguang:613900,yuedu:166748,hudong:5709,dianzan:4352,shoucang:1075,pinglun:282},
+      stores: [
+        {name:'岭上·Omakase（桃源国际店）',notes:12,baoguang:446135,yuedu:80984,dianzan:2328,shoucang:717,pinglun:193,hudong:3238},
+        {name:'岭上樽·Omakase（武汉新天地店）',notes:10,baoguang:167765,yuedu:85764,dianzan:2024,shoucang:358,pinglun:89,hudong:2471}
+      ],
+      top5bg:[
+        {name:'芝士夹心饼干',store:'桃源国际店',baoguang:93244,dianzan:330,shoucang:111,pinglun:16},
+        {name:'很皮的皮卡丘',store:'桃源国际店',baoguang:75565,dianzan:220,shoucang:106,pinglun:15},
+        {name:'米桃珠珠糖',store:'桃源国际店',baoguang:71199,dianzan:215,shoucang:65,pinglun:44},
+        {name:'喂自己袋盐',store:'桃源国际店',baoguang:64224,dianzan:227,shoucang:102,pinglun:12},
+        {name:'萌萌芽',store:'桃源国际店',baoguang:35125,dianzan:183,shoucang:85,pinglun:27}
+      ],
+      top5hd:[
+        {name:'鲸鱼欧尼',store:'新天地店',hudong:1120,dianzan:850,shoucang:260,pinglun:10},
+        {name:'芝士夹心饼干',store:'桃源国际店',hudong:457,dianzan:330,shoucang:111,pinglun:16},
+        {name:'很皮的皮卡丘',store:'桃源国际店',hudong:341,dianzan:220,shoucang:106,pinglun:15},
+        {name:'米桃珠珠糖',store:'桃源国际店',hudong:324,dianzan:215,shoucang:65,pinglun:44},
+        {name:'萌萌芽',store:'桃源国际店',hudong:295,dianzan:183,shoucang:85,pinglun:27}
+      ]
+    }
+  },
+  jw: {
+    '2': {
+      total: {notes:59,baoguang:1372616,yuedu:444587,hudong:11028,dianzan:7922,shoucang:2336,pinglun:770},
+      stores: [
+        {name:'成都',notes:9,baoguang:294706,yuedu:74452,dianzan:1192,shoucang:286,pinglun:104,hudong:1582},
+        {name:'昆明',notes:13,baoguang:148900,yuedu:44838,dianzan:1080,shoucang:325,pinglun:155,hudong:1560},
+        {name:'武汉',notes:12,baoguang:327537,yuedu:121144,dianzan:1642,shoucang:449,pinglun:189,hudong:2280},
+        {name:'重庆',notes:25,baoguang:601473,yuedu:204153,dianzan:4008,shoucang:1276,pinglun:322,hudong:5606}
+      ],
+      top5bg:[
+        {name:'杜杜不疼',store:'重庆',baoguang:64389,dianzan:311,shoucang:236,pinglun:15},
+        {name:'八方来财小宝贝',store:'成都',baoguang:60714,dianzan:237,shoucang:33,pinglun:16},
+        {name:'在逃肉肉',store:'重庆',baoguang:48776,dianzan:238,shoucang:50,pinglun:7},
+        {name:'SwinesomF',store:'重庆',baoguang:46186,dianzan:324,shoucang:74,pinglun:24},
+        {name:'加不加麻辣',store:'成都',baoguang:77958,dianzan:176,shoucang:31,pinglun:17}
+      ],
+      top5hd:[
+        {name:'杜杜不疼',store:'重庆',hudong:562,dianzan:311,shoucang:236,pinglun:15},
+        {name:'SwinesomF',store:'重庆',hudong:422,dianzan:324,shoucang:74,pinglun:24},
+        {name:'在逃肉肉',store:'重庆',hudong:295,dianzan:238,shoucang:50,pinglun:7},
+        {name:'好好吃饭',store:'武汉',hudong:313,dianzan:167,shoucang:127,pinglun:19},
+        {name:'加不加麻辣',store:'成都',hudong:224,dianzan:176,shoucang:31,pinglun:17}
+      ]
+    }
+  },
+  xjs: {
+    '2': {
+      total: {notes:48,baoguang:2793056,yuedu:391939,hudong:13760,dianzan:10339,shoucang:2500,pinglun:921},
+      stores: [
+        {name:'武汉',notes:28,baoguang:1309269,yuedu:116363,dianzan:4581,shoucang:1463,pinglun:605,hudong:6649},
+        {name:'重庆',notes:20,baoguang:1483787,yuedu:275576,dianzan:5758,shoucang:1037,pinglun:316,hudong:7111}
+      ],
+      top5bg:[
+        {name:'好吃的小布丁',store:'重庆',baoguang:545843,dianzan:466,shoucang:62,pinglun:17},
+        {name:'榴莲拌饭',store:'武汉',baoguang:462820,dianzan:336,shoucang:175,pinglun:49},
+        {name:'Pizza大王',store:'武汉',baoguang:178366,dianzan:161,shoucang:3,pinglun:12},
+        {name:'小熊吹奶瓶',store:'重庆',baoguang:156138,dianzan:993,shoucang:149,pinglun:24},
+        {name:'布丁超爱吃',store:'重庆',baoguang:148640,dianzan:166,shoucang:46,pinglun:5}
+      ],
+      top5hd:[
+        {name:'小熊吹奶瓶',store:'重庆',hudong:1166,dianzan:993,shoucang:149,pinglun:24},
+        {name:'榴莲拌饭',store:'武汉',hudong:560,dianzan:336,shoucang:175,pinglun:49},
+        {name:'好吃的小布丁',store:'重庆',hudong:545,dianzan:466,shoucang:62,pinglun:17},
+        {name:'白糖很甜',store:'武汉',hudong:437,dianzan:314,shoucang:103,pinglun:20},
+        {name:'莓名字了',store:'武汉',hudong:426,dianzan:313,shoucang:103,pinglun:10}
+      ]
+    },
+    '3': {
+      total: {notes:69,baoguang:1281256,yuedu:358822,hudong:12186,dianzan:9112,shoucang:2286,pinglun:788},
+      stores: [
+        {name:'武汉',notes:40,baoguang:756088,yuedu:209360,dianzan:5663,shoucang:1473,pinglun:548,hudong:7684},
+        {name:'重庆',notes:29,baoguang:525168,yuedu:149462,dianzan:3449,shoucang:813,pinglun:240,hudong:4502}
+      ],
+      top5bg:[
+        {name:'安的漫长时光',store:'武汉',baoguang:102450,dianzan:318,shoucang:159,pinglun:23},
+        {name:'小兔瑞宝',store:'重庆',baoguang:85243,dianzan:175,shoucang:19,pinglun:8},
+        {name:'佩奇不是猪',store:'武汉',baoguang:74426,dianzan:329,shoucang:103,pinglun:25},
+        {name:'奶茶脑袋',store:'重庆',baoguang:71830,dianzan:430,shoucang:79,pinglun:8},
+        {name:'珍妮煎梨',store:'武汉',baoguang:54848,dianzan:111,shoucang:5,pinglun:19}
+      ],
+      top5hd:[
+        {name:'奶茶脑袋',store:'重庆',hudong:517,dianzan:430,shoucang:79,pinglun:8},
+        {name:'安的漫长时光',store:'武汉',hudong:500,dianzan:318,shoucang:159,pinglun:23},
+        {name:'邪恶黄面包',store:'武汉',hudong:469,dianzan:390,shoucang:64,pinglun:15},
+        {name:'佩奇不是猪',store:'武汉',hudong:457,dianzan:329,shoucang:103,pinglun:25},
+        {name:'葵酱有点甜',store:'武汉',hudong:378,dianzan:244,shoucang:106,pinglun:28}
+      ],
+      allBloggers: {
+        '重庆': [
+          {name:'小兔瑞宝',store:'重庆国金店',baoguang:85243,yuedu:15243,dianzan:175,shoucang:19,pinglun:8,hudong:202},
+          {name:'江月诗',baoguang:63505,yuedu:13620,dianzan:169,shoucang:2,pinglun:9,hudong:180},
+          {name:'树莓',baoguang:61361,yuedu:12360,dianzan:140,shoucang:34,pinglun:8,hudong:182},
+          {name:'奶茶脑袋',baoguang:71830,yuedu:16550,dianzan:430,shoucang:79,pinglun:8,hudong:517},
+          {name:'jiaen',baoguang:39889,yuedu:7898,dianzan:49,shoucang:13,pinglun:1,hudong:63},
+          {name:'金九御',baoguang:24066,yuedu:12271,dianzan:184,shoucang:16,pinglun:6,hudong:206},
+          {name:'IC',baoguang:23658,yuedu:10535,dianzan:187,shoucang:26,pinglun:4,hudong:217},
+          {name:'一只yi',baoguang:21972,yuedu:9362,dianzan:142,shoucang:82,pinglun:19,hudong:243},
+          {name:'悲伤小蛋糕',baoguang:21085,yuedu:3028,dianzan:80,shoucang:51,pinglun:7,hudong:138},
+          {name:'笑笑日记',baoguang:20320,yuedu:7270,dianzan:230,shoucang:54,pinglun:13,hudong:297},
+          {name:'樱桃醒醒',baoguang:15248,yuedu:7328,dianzan:115,shoucang:62,pinglun:14,hudong:191},
+          {name:'灿灿好困',baoguang:11038,yuedu:7137,dianzan:219,shoucang:31,pinglun:33,hudong:283},
+          {name:'一枚可可',baoguang:12451,yuedu:7289,dianzan:121,shoucang:20,pinglun:12,hudong:153},
+          {name:'雅雅乐',baoguang:9496,yuedu:3111,dianzan:97,shoucang:39,pinglun:23,hudong:159},
+          {name:'大桔子',baoguang:7503,yuedu:3962,dianzan:99,shoucang:3,pinglun:4,hudong:106},
+          {name:'丫丫吖',baoguang:8115,yuedu:1221,dianzan:54,shoucang:31,pinglun:11,hudong:96},
+          {name:'晴天',baoguang:8980,yuedu:4122,dianzan:162,shoucang:2,pinglun:7,hudong:171},
+          {name:'大灰兔子',baoguang:5686,yuedu:3511,dianzan:86,shoucang:25,pinglun:6,hudong:117},
+          {name:'6z0',baoguang:3054,yuedu:467,dianzan:77,shoucang:7,pinglun:6,hudong:90},
+          {name:'喝个甜刘奶',baoguang:2391,yuedu:1011,dianzan:75,shoucang:20,pinglun:2,hudong:97},
+          {name:'木木',baoguang:1128,yuedu:589,dianzan:101,shoucang:51,pinglun:0,hudong:152},
+          {name:'鼠星星',baoguang:1128,yuedu:124,dianzan:72,shoucang:35,pinglun:15,hudong:122},
+          {name:'畔城烟纱',baoguang:698,yuedu:328,dianzan:51,shoucang:1,pinglun:0,hudong:52},
+          {name:'心心',baoguang:1804,yuedu:569,dianzan:63,shoucang:30,pinglun:4,hudong:97},
+          {name:'拥抱太阳的太阳',baoguang:724,yuedu:74,dianzan:70,shoucang:19,pinglun:9,hudong:98},
+          {name:'幸福美',baoguang:578,yuedu:123,dianzan:77,shoucang:5,pinglun:2,hudong:84},
+          {name:'懒大王小馋猫',baoguang:656,yuedu:157,dianzan:51,shoucang:30,pinglun:3,hudong:84},
+          {name:'芋泥酥',baoguang:834,yuedu:133,dianzan:54,shoucang:10,pinglun:4,hudong:68},
+          {name:'吴吃吃',baoguang:727,yuedu:69,dianzan:19,shoucang:16,pinglun:2,hudong:37}
+        ],
+        '武汉': [
+          {name:'安的漫长时光',baoguang:102450,yuedu:15691,dianzan:318,shoucang:159,pinglun:23,hudong:500},
+          {name:'佩奇不是猪',baoguang:74426,yuedu:13521,dianzan:329,shoucang:103,pinglun:25,hudong:457},
+          {name:'珍妮煎梨',baoguang:54848,yuedu:4459,dianzan:111,shoucang:5,pinglun:19,hudong:135},
+          {name:'月野兔的日记',baoguang:41001,yuedu:8033,dianzan:208,shoucang:23,pinglun:21,hudong:252},
+          {name:'喂自己袋盐',baoguang:38647,yuedu:7386,dianzan:222,shoucang:82,pinglun:19,hudong:323},
+          {name:'葵酱有点甜',baoguang:32781,yuedu:6933,dianzan:244,shoucang:106,pinglun:28,hudong:378},
+          {name:'邪恶黄面包',baoguang:31868,yuedu:7344,dianzan:390,shoucang:64,pinglun:15,hudong:469},
+          {name:'范范范米兰',baoguang:23615,yuedu:8521,dianzan:309,shoucang:37,pinglun:13,hudong:359},
+          {name:'小珍珠',baoguang:23618,yuedu:8125,dianzan:308,shoucang:36,pinglun:16,hudong:360},
+          {name:'荡荡',baoguang:23825,yuedu:5166,dianzan:170,shoucang:43,pinglun:12,hudong:225},
+          {name:'仙女有只天仙喵',baoguang:24436,yuedu:4578,dianzan:109,shoucang:71,pinglun:29,hudong:209},
+          {name:'vikki',baoguang:24939,yuedu:8037,dianzan:183,shoucang:62,pinglun:11,hudong:256},
+          {name:'薄荷味的夏天',baoguang:27330,yuedu:3615,dianzan:176,shoucang:56,pinglun:14,hudong:246},
+          {name:'安宁an',baoguang:23154,yuedu:8866,dianzan:105,shoucang:3,pinglun:6,hudong:114},
+          {name:'温柔小虎',baoguang:17200,yuedu:7111,dianzan:102,shoucang:1,pinglun:10,hudong:113},
+          {name:'大玥大玥大玥玥',baoguang:16514,yuedu:3977,dianzan:124,shoucang:64,pinglun:41,hudong:229},
+          {name:'小脸通黄',baoguang:16355,yuedu:4927,dianzan:159,shoucang:43,pinglun:14,hudong:216},
+          {name:'妮可niconiconi',baoguang:15721,yuedu:5778,dianzan:121,shoucang:61,pinglun:20,hudong:202},
+          {name:'小奶芋崽',baoguang:15171,yuedu:6376,dianzan:165,shoucang:57,pinglun:21,hudong:243},
+          {name:'白桦林',baoguang:12578,yuedu:7880,dianzan:110,shoucang:10,pinglun:6,hudong:126},
+          {name:'yaki77酱',baoguang:12711,yuedu:6217,dianzan:107,shoucang:14,pinglun:14,hudong:135},
+          {name:'快乐兔耶',baoguang:12221,yuedu:7211,dianzan:175,shoucang:58,pinglun:24,hudong:257},
+          {name:'小桃运',baoguang:12244,yuedu:8951,dianzan:125,shoucang:12,pinglun:8,hudong:145},
+          {name:'Lolipp',baoguang:10947,yuedu:3257,dianzan:127,shoucang:60,pinglun:20,hudong:207},
+          {name:'pipibobo',baoguang:10021,yuedu:8666,dianzan:122,shoucang:5,pinglun:9,hudong:136},
+          {name:'芝士小面包',baoguang:8942,yuedu:4331,dianzan:46,shoucang:11,pinglun:5,hudong:62},
+          {name:'Dore',baoguang:8931,yuedu:6129,dianzan:104,shoucang:3,pinglun:1,hudong:108},
+          {name:'汪汪小奶泡',baoguang:8633,yuedu:5221,dianzan:211,shoucang:4,pinglun:6,hudong:221},
+          {name:'熙宝蛋蛋',baoguang:7145,yuedu:1547,dianzan:40,shoucang:9,pinglun:8,hudong:57},
+          {name:'一闪一闪亮晶晶',baoguang:6500,yuedu:7650,dianzan:105,shoucang:3,pinglun:3,hudong:111},
+          {name:'小猫钓鱼',baoguang:5670,yuedu:658,dianzan:48,shoucang:11,pinglun:2,hudong:61},
+          {name:'Sunnie呀',baoguang:2011,yuedu:1027,dianzan:86,shoucang:71,pinglun:19,hudong:176},
+          {name:'想吃什么饱饱',baoguang:2107,yuedu:566,dianzan:54,shoucang:37,pinglun:37,hudong:128},
+          {name:'michill',baoguang:1873,yuedu:266,dianzan:204,shoucang:35,pinglun:11,hudong:250},
+          {name:'春日部暴走大空耳',baoguang:1541,yuedu:573,dianzan:4,shoucang:4,pinglun:3,hudong:11},
+          {name:'味语',baoguang:1030,yuedu:287,dianzan:68,shoucang:11,pinglun:8,hudong:87},
+          {name:'腹黑芝士',baoguang:1154,yuedu:231,dianzan:50,shoucang:29,pinglun:5,hudong:84},
+          {name:'u一点糕冷',baoguang:1092,yuedu:109,dianzan:2,shoucang:2,pinglun:0,hudong:4},
+          {name:'蛋壳贝贝',baoguang:445,yuedu:108,dianzan:9,shoucang:6,pinglun:1,hudong:16},
+          {name:'sdf',baoguang:393,yuedu:31,dianzan:13,shoucang:2,pinglun:1,hudong:16}
+        ]
+      }
+    }
+  }
+};
+
+// ===== BF DATA =====
+const BF_DATA = {
+  ls: {
+    '2': {
+      title: '2月岭上系列 - 情人节+春节双节点',
+      period: '2026年2月',
+      stores: '岭上·Omakase（桃源国际商业中心店）/ 岭上樽·Omakase（武汉新天地店）',
+      city: '武汉',
+      themes: [
+        {
+          name: '高端Omakase体验',
+          desc: '黑金风格+仪式感，打造"武汉也有像样的Omakase"稀缺感定位',
+          keywords: ['Crush约会','直男抄作业','黑金风格','高端仪式感']
+        },
+        {
+          name: 'IP联名话题',
+          desc: '岭上樽店以Omakitty联名IP+Hello Kitty视觉资产，打造"公主梦幻"场景',
+          keywords: ['Omakitty','Hello Kitty','公主快乐','IP联名']
+        }
+      ],
+      content: '高端Omakase体验+IP联名话题',
+      node: '情人节+春节',
+      strategy: '精品策略（22篇）'
+    },
+    '3': {
+      title: '3月岭上系列 - 媒体推广合同',
+      period: '2026年3月',
+      stores: '岭上·Omakase（桃源国际商业中心店）/ 岭上樽·Omakase（武汉新天地店）',
+      city: '武汉',
+      themes: [
+        {
+          name: '持续投放优化',
+          desc: '延续2月精品策略，在高端Omakase体验基础上探索更多场景化内容表达',
+          keywords: ['春季约会','Omakase体验','高端仪式感']
+        },
+        {
+          name: '两店差异化深化',
+          desc: '桃源国际店强化高端定位，新天地店继续IP联名路线',
+          keywords: ['差异化定位','IP联名','高端黑金']
+        }
+      ],
+      content: '高端Omakase体验+IP联名深化',
+      node: '3月常规投放',
+      strategy: '精品策略延续'
+    }
+  },
+  jw: {
+    '2': {
+      title: '2月極屋鮨牛 - 春节+情人节四城联动',
+      period: '2026年2月',
+      stores: '成都/昆明/武汉/重庆 四城',
+      city: '成都·昆明·武汉·重庆',
+      themes: [
+        {
+          name: '日式烤肉+氛围约会',
+          desc: '春节年味+情人节浪漫双节点，"父母以为vs实际""相亲汗流浃背"等反差话题引爆互动',
+          keywords: ['复购背书','四刷','回头客','慕名而来']
+        },
+        {
+          name: '地域标签+真实体验',
+          desc: '"两江新区之光"地域卡位精准，真实体验分享贯穿各城投放',
+          keywords: ['地域卡位','真实体验','日式烤肉','氛围约会']
+        }
+      ],
+      content: '日式烤肉+氛围约会+复购背书',
+      node: '春节+情人节',
+      strategy: '广覆盖策略（59篇）'
+    },
+    '5': {
+      title: '5月極屋鮨牛重庆国金店 - 生日仪式感 x 五一好去处',
+      period: '2025年4月-5月',
+      stores: '重庆国金IFS · L126',
+      city: '重庆',
+      score: '4.8分 | 115元/人',
+      themes: [
+        {
+          name: '生日仪式感',
+          desc: 'LED生日快乐灯牌+公主皇冠+粉色横幅"公主请发财"，打造"过生日就来这里"心智占位。核心人群：20-30岁女性',
+          keywords: ['公主生日','生日仪式感','LED灯牌','女主角视角']
+        },
+        {
+          name: '五一好去处',
+          desc: '假期氛围感+多人聚餐，国金IFS探店视角，母亲节+五一双主题联动',
+          keywords: ['五一去哪吃','国金IFS','和牛烧肉','家庭聚餐']
+        }
+      ],
+      content: '生日仪式感+五一假期引流',
+      node: '五一黄金周+母亲节',
+      strategy: '节点营销+场景化投放',
+      requirements: {
+        blogger: '美食/生活类博主，粉丝1w+优先，重庆本地',
+        content: '封面需出现和牛/烤肉画面，生日场景要素，正文字数200字以上',
+        data: '7日留存，阅读量不低于500，禁止删除/私密'
+      },
+      timeline: [
+        {time:'4月中旬',desc:'达人确认&场次安排'},
+        {time:'4月下旬',desc:'探店拍摄&内容生产'},
+        {time:'4月30日',desc:'五一前夕预热发布'},
+        {time:'5月1-5日',desc:'黄金周集中发布'},
+        {time:'5月中旬',desc:'复盘优化'}
+      ]
+    }
+  },
+  xjs: {
+    '2': {
+      title: '2月新極膳 - 情人节主节点',
+      period: '2026年2月',
+      stores: '武汉/重庆',
+      city: '武汉·重庆',
+      themes: [
+        {
+          name: '海鲜自助放题',
+          desc: '"含金量"+性价比+约会三重定位，"自助约会餐"场景精准卡位',
+          keywords: ['含金量','自助约会餐','top级别','遥遥领先']
+        },
+        {
+          name: '反差叙事引爆流量',
+          desc: '"减肥误食"反差叙事引爆流量，"反复去5678次"强化复购背书',
+          keywords: ['减肥误食','反复去','含金量','乖乖店']
+        }
+      ],
+      content: '海鲜自助放题+"含金量"IP',
+      node: '情人节（主）',
+      strategy: '中等密度（48篇）'
+    },
+    '3': {
+      title: '3月新極膳 - 武汉重庆双城持续投放',
+      period: '2026年3月',
+      stores: '武汉/重庆',
+      city: '武汉·重庆',
+      themes: [
+        {
+          name: '持续深化"含金量"品牌IP',
+          desc: '2月验证"含金量"话题有效，3月继续打造系列化内容矩阵',
+          keywords: ['含金量','海鲜自助','约会餐厅','性价比']
+        },
+        {
+          name: '武汉站放量+重庆站均衡',
+          desc: '武汉站从28篇增至40篇持续放量，重庆站从单篇爆量转向多博主均衡分布',
+          keywords: ['武汉放量','重庆均衡','复投爆款','新博主拓展']
+        }
+      ],
+      content: '海鲜自助放题+"含金量"IP深化',
+      node: '3月常规投放',
+      strategy: '中等密度（69篇）'
+    }
+  }
+};
+
+// ===== HELPERS =====
+function fmt(n){return n>=10000?(n/10000).toFixed(1)+'万':n.toLocaleString()}
+function fmtW(n){return n>=10000?(n/10000).toFixed(2)+'万':n.toLocaleString()}
+
+function renderKPI(containerId, d){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  const avgBg=d.notes?Math.round(d.baoguang/d.notes):0;
+  const avgHd=d.notes?Math.round(d.hudong/d.notes):0;
+  el.innerHTML=`
+    <div class="kpi"><div class="kpi-label">笔记数</div><div class="kpi-value blue">${d.notes}</div><div class="kpi-sub">篇</div></div>
+    <div class="kpi"><div class="kpi-label">总曝光量</div><div class="kpi-value red">${fmt(d.baoguang)}</div><div class="kpi-sub">单篇均 ${fmt(avgBg)}</div></div>
+    <div class="kpi"><div class="kpi-label">总阅读量</div><div class="kpi-value blue">${fmt(d.yuedu)}</div></div>
+    <div class="kpi"><div class="kpi-label">总互动量</div><div class="kpi-value gold">${fmt(d.hudong)}</div><div class="kpi-sub">单篇均 ${fmt(avgHd)}</div></div>
+    <div class="kpi"><div class="kpi-label">点赞</div><div class="kpi-value">${fmt(d.dianzan)}</div></div>
+    <div class="kpi"><div class="kpi-label">收藏</div><div class="kpi-value">${fmt(d.shoucang)}</div></div>
+    <div class="kpi"><div class="kpi-label">评论</div><div class="kpi-value">${fmt(d.pinglun)}</div></div>
+  `;
+}
+
+function renderTop5Table(containerId, list, type){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  const isBg=type==='bg';
+  let html='<table class="data-table"><thead><tr><th>#</th><th>博主</th><th>门店</th>'+(isBg?'<th>曝光</th>':'<th>互动</th>')+'<th>点赞</th><th>收藏</th><th>评论</th></tr></thead><tbody>';
+  list.forEach((b,i)=>{
+    const rc=i<3?`rank-${i+1}`:'rank-n';
+    html+=`<tr><td><span class="rank-badge ${rc}">${i+1}</span></td><td>${b.name}</td><td><span class="store-tag">${b.store}</span></td><td class="num">${isBg?fmt(b.baoguang):fmt(b.hudong)}</td><td class="num">${fmt(b.dianzan)}</td><td class="num">${fmt(b.shoucang)}</td><td class="num">${fmt(b.pinglun)}</td></tr>`;
+  });
+  html+='</tbody></table>';
+  el.innerHTML=html;
+}
+
+function renderAllTable(containerId, cityData){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  let html='';
+  for(const[city, list] of Object.entries(cityData)){
+    html+=`<h3 style="font-size:17px;color:var(--text);margin:20px 0 12px;font-weight:600">${city}（${list.length}篇）</h3>`;
+    html+='<div style="overflow-x:auto"><table class="data-table"><thead><tr><th>#</th><th>博主</th><th>曝光</th><th>阅读</th><th>点赞</th><th>收藏</th><th>评论</th><th>互动</th></tr></thead><tbody>';
+    list.sort((a,b)=>b.baoguang-a.baoguang);
+    list.forEach((b,i)=>{
+      const rc=i<3?`rank-${i+1}`:'rank-n';
+      html+=`<tr><td><span class="rank-badge ${rc}">${i+1}</span></td><td>${b.name}</td><td class="num">${fmt(b.baoguang)}</td><td class="num">${fmt(b.yuedu)}</td><td class="num">${fmt(b.dianzan)}</td><td class="num">${fmt(b.shoucang)}</td><td class="num">${fmt(b.pinglun)}</td><td class="num">${fmt(b.hudong)}</td></tr>`;
+    });
+    html+='</tbody></table></div>';
+  }
+  el.innerHTML=html;
+}
+
+// ===== MoM (环比) RENDERING =====
+function pctChange(prev,cur){
+  if(!prev)return 0;
+  return((cur-prev)/prev)*100;
+}
+
+function renderMoM(containerId, curData, prevData){
+  const el=document.getElementById(containerId);
+  if(!el||!curData||!prevData)return;
+  const c=curData.total, p=prevData.total;
+  const metrics=[
+    {label:'笔记数',cur:c.notes,prev:p.notes},
+    {label:'总曝光量',cur:c.baoguang,prev:p.baoguang,fmt:'w'},
+    {label:'总阅读量',cur:c.yuedu,prev:p.yuedu,fmt:'w'},
+    {label:'总互动量',cur:c.hudong,prev:p.hudong},
+    {label:'点赞',cur:c.dianzan,prev:p.dianzan},
+    {label:'收藏',cur:c.shoucang,prev:p.shoucang},
+    {label:'评论',cur:c.pinglun,prev:p.pinglun}
+  ];
+  let html='';
+  metrics.forEach(m=>{
+    const chg=pctChange(m.prev,m.cur);
+    const cls=chg>=0?'up':'down';
+    const sign=chg>=0?'+':'';
+    const dispCur=m.fmt==='w'?fmt(m.cur):m.cur.toLocaleString();
+    const dispPrev=m.fmt==='w'?fmt(m.prev):m.prev.toLocaleString();
+    html+=`
+      <div class="mom-card">
+        <div class="mom-label">${m.label}</div>
+        <div class="mom-current">${dispCur}</div>
+        <div class="mom-change ${cls}"><span class="arrow"></span>${sign}${chg.toFixed(1)}%</div>
+        <div class="mom-prev">上月 ${dispPrev}</div>
+      </div>`;
+  });
+  el.innerHTML=html;
+}
+
+// ===== BF RENDERING =====
+function renderBF(containerId, bfData, brandKey){
+  const el=document.getElementById(containerId);
+  if(!el||!bfData)return;
+  const colorVar = brandKey==='jw'?'var(--accent2)':brandKey==='xjs'?'var(--gold)':'var(--accent)';
+  const kwClass = brandKey==='jw'?'blue':brandKey==='xjs'?'gold':'';
+
+  let html = `
+    <div class="bf-card">
+      <h3><span class="bf-badge" style="background:${colorVar}">BF</span>${bfData.title}</h3>
+      <div class="bf-meta">
+        <span>投放周期：${bfData.period}</span>
+        <span>投放城市：${bfData.city}</span>
+        <span>投放策略：${bfData.strategy}</span>
+        <span>投放节点：${bfData.node}</span>
+      </div>
+      <div class="bf-content-grid">
+  `;
+  bfData.themes.forEach(t=>{
+    html+=`
+      <div class="bf-item">
+        <h4>${t.name}</h4>
+        <p>${t.desc}</p>
+        <div class="keywords">${t.keywords.map(k=>`<span class="kw ${kwClass}">${k}</span>`).join('')}</div>
+      </div>
+    `;
+  });
+  html+=`</div>`;
+
+  if(bfData.requirements){
+    html+=`
+      <div style="margin-top:16px;padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)">
+        <h4 style="font-size:15px;font-weight:700;margin-bottom:10px">达人招募要求</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:14px;color:var(--muted)">
+          <div><strong style="color:var(--text)">达人画像</strong><br>${bfData.requirements.blogger}</div>
+          <div><strong style="color:var(--text)">内容要求</strong><br>${bfData.requirements.content}</div>
+          <div><strong style="color:var(--text)">数据要求</strong><br>${bfData.requirements.data}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  if(bfData.timeline){
+    html+=`
+      <div style="margin-top:16px;padding:16px;background:#f7f8fa;border-radius:10px;border:1px solid var(--border)">
+        <h4 style="font-size:15px;font-weight:700;margin-bottom:10px">发布时间节点</h4>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          ${bfData.timeline.map(t=>`
+            <div style="flex:1;min-width:120px;text-align:center;padding:10px;background:#fff;border-radius:8px;border:1px solid var(--border)">
+              <div style="font-weight:700;font-size:14px;color:${colorVar}">${t.time}</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px">${t.desc}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  html+=`</div>`;
+  el.innerHTML=html;
+}
+
+// ===== SCROLL HELPER =====
+function scrollToEl(selector){
+  const el=document.querySelector(selector);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Chart instances
+const charts={};
+function makeBarChart(canvasId, labels, datasets, accentColor){
+  const ctx=document.getElementById(canvasId);
+  if(!ctx)return;
+  if(charts[canvasId])charts[canvasId].destroy();
+  charts[canvasId]=new Chart(ctx,{
+    type:'bar',
+    data:{labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:datasets.length>1,labels:{color:'#5a6070',font:{size:13,family:'Microsoft YaHei'}}}},
+      scales:{
+        x:{ticks:{color:'#5a6070',font:{size:13,family:'Microsoft YaHei'}},grid:{color:'rgba(0,0,0,.04)'}},
+        y:{ticks:{color:'#5a6070',font:{size:13},callback:v=>v>=10000?(v/10000).toFixed(0)+'万':v},grid:{color:'rgba(0,0,0,.06)'}}
+      }
+    }
+  });
+}
+
+function renderCharts(brandKey, month){
+  const d=DATA[brandKey]?.[month];
+  if(!d)return;
+  const stores=d.stores;
+  const labels=stores.map(s=>s.name);
+  const prefix=`${brandKey}-${month}`;
+
+  makeBarChart(`${prefix}-chart1`,labels,[{label:'曝光量',data:stores.map(s=>s.baoguang),backgroundColor:'rgba(233,69,96,.65)',borderRadius:6}]);
+  makeBarChart(`${prefix}-chart2`,labels,[
+    {label:'点赞',data:stores.map(s=>s.dianzan),backgroundColor:'rgba(45,125,230,.65)',borderRadius:6},
+    {label:'收藏',data:stores.map(s=>s.shoucang),backgroundColor:'rgba(232,160,0,.65)',borderRadius:6},
+    {label:'评论',data:stores.map(s=>s.pinglun),backgroundColor:'rgba(16,185,129,.65)',borderRadius:6}
+  ]);
+}
+
+// ===== INIT =====
+function initSection(brandKey, month){
+  const d=DATA[brandKey]?.[month];
+  if(!d)return;
+  renderKPI(`${brandKey}-${month}-kpi`,d.total);
+  renderTop5Table(`${brandKey}-${month}-top5bg`,d.top5bg,'bg');
+  renderTop5Table(`${brandKey}-${month}-top5hd`,d.top5hd,'hd');
+  renderCharts(brandKey,month);
+  if(d.allBloggers) renderAllTable(`${brandKey}-${month}-all`,d.allBloggers);
+  // Render MoM if previous month data exists
+  const momEl=document.getElementById(`${brandKey}-${month}-mom`);
+  if(momEl){
+    const prevMonth=String(Number(month)-1);
+    const prevData=DATA[brandKey]?.[prevMonth];
+    if(prevData) renderMoM(`${brandKey}-${month}-mom`,d,prevData);
+  }
+  // Render BF
+  const bf=BF_DATA[brandKey]?.[month];
+  if(bf) renderBF(`${brandKey}-${month}-bf`,bf,brandKey);
+}
+
+// Init all data sections
+initSection('ls','2');
+initSection('jw','2');
+initSection('xjs','2');
+initSection('xjs','3');
+
+// Init BF-only sections (no data)
+renderBF('ls-3-bf', BF_DATA.ls['3'], 'ls');
+renderBF('jw-5-bf', BF_DATA.jw['5'], 'jw');
+
+// Brand tab switching
+document.querySelectorAll('.brand-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.brand-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.report-section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('sec-'+tab.dataset.brand).classList.add('active');
+  });
+});
+
+// Month tab switching
+document.querySelectorAll('.month-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const sec=tab.dataset.section;
+    const month=tab.dataset.month;
+    tab.parentElement.querySelectorAll('.month-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll(`#sec-${sec} .month-content`).forEach(c=>c.classList.remove('active'));
+    document.getElementById(`${sec}-${month}`).classList.add('active');
+  });
+});
+
+// ===== Watermark =====
+(function drawWatermark(){
+  const canvas = document.getElementById('wm-canvas');
+  if(!canvas) return;
+
+  function render(){
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    canvas.width  = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, W, H);
+
+    const text    = '成都弯道超车传媒';
+    const angle   = -25 * Math.PI / 180;
+    const fontSize = 15;
+    const gapX    = 220;
+    const gapY    = 130;
+
+    ctx.save();
+    ctx.font      = `${fontSize}px "Microsoft YaHei", "PingFang SC", sans-serif`;
+    ctx.fillStyle = 'rgba(100,100,120,0.10)';
+    ctx.rotate(angle);
+
+    // 扩大绘制范围确保旋转后无空白边角
+    const diag = Math.ceil(Math.sqrt(W*W + H*H));
+    for(let y = -diag; y < diag; y += gapY){
+      for(let x = -diag; x < diag; x += gapX){
+        ctx.fillText(text, x, y);
+      }
+    }
+    ctx.restore();
+  }
+
+  render();
+  window.addEventListener('resize', render);
+})();
+</script>
+</body>
+</html>

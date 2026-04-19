@@ -1,0 +1,9 @@
+node_modules/
+.workbuddy/
+*.py
+*.js
+*.json
+*.xlsx
+*.txt
+*.csv
+*.pptx
